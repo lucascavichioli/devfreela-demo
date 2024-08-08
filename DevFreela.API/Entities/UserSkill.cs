@@ -2,12 +2,13 @@
 {
     public class UserSkill
     {
-        public UserSkill(User user, Skill skill) : base()
+        public UserSkill(int idUser, int idSkill) : base()
         {
-            User = user;
-            Skill = skill;
+            IdUser = idUser;
+            IdSkill = idSkill;
         }
 
+        public int Id { get; private set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
         public int IdSkill { get; private set; }
