@@ -9,6 +9,7 @@
             IdProject = idProject;
             IdUser = idUser;
         }
+
         public string Content { get; private set; }
         public int IdProject { get; private set; }
         public Project Project { get; private set; }

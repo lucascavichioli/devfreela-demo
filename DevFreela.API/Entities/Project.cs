@@ -1,4 +1,5 @@
-﻿using DevFreela.API.Enums;
+﻿using DevFreela.API.Controllers;
+using DevFreela.API.Enums;
 
 namespace DevFreela.API.Entities
 {
@@ -6,13 +7,14 @@ namespace DevFreela.API.Entities
     {
         protected Project() { }
         public Project(string title, string description, int idClient, int idFreelancer, decimal totalCost)
-            :base()
+            : base()
         {
             Title = title;
             Description = description;
             IdClient = idClient;
             IdFreelancer = idFreelancer;
             TotalCost = totalCost;
+
             Status = ProjectStatusEnum.Created;
             Comments = [];
         }
@@ -23,7 +25,6 @@ namespace DevFreela.API.Entities
         public User Client { get; private set; }
         public int IdFreelancer { get; private set; }
         public User Freelancer { get; private set; }
-
         public decimal TotalCost { get; private set; }
         public DateTime? StartedAt { get; private set; }
         public DateTime? CompletedAt { get; private set; }
@@ -32,21 +33,22 @@ namespace DevFreela.API.Entities
 
         public void Cancel()
         {
-            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended) 
+            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Suspended)
             {
                 Status = ProjectStatusEnum.Cancelled;
-            }  
+            }
         }
 
-        public void Start() 
+        public void Start()
         {
             if (Status == ProjectStatusEnum.Created)
             {
                 Status = ProjectStatusEnum.InProgress;
-                StartedAt = DateTime.Now;   
+                StartedAt = DateTime.Now;
             }
         }
-        public void Complete() 
+
+        public void Complete()
         {
             if (Status == ProjectStatusEnum.PaymentPending || Status == ProjectStatusEnum.InProgress)
             {
@@ -55,19 +57,19 @@ namespace DevFreela.API.Entities
             }
         }
 
-        public void SetPaymentPending() 
+        public void SetPaymentPending()
         {
             if (Status == ProjectStatusEnum.InProgress)
             {
                 Status = ProjectStatusEnum.PaymentPending;
             }
         }
-        public void Update(string title, string description, decimal totalCost) 
+
+        public void Update(string title, string description, decimal totalCost)
         {
             Title = title;
-            Description = description;  
-            TotalCost = totalCost; 
+            Description = description;
+            TotalCost = totalCost;
         }
-
     }
 }

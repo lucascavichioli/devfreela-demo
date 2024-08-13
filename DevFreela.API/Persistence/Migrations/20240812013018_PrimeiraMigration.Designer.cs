@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevFreela.API.Persistence.Migrations
 {
     [DbContext(typeof(DevFreelaDbContext))]
-    [Migration("20240808223342_PrimeiraMigration")]
+    [Migration("20240812013018_PrimeiraMigration")]
     partial class PrimeiraMigration
     {
         /// <inheritdoc />
@@ -169,7 +169,13 @@ namespace DevFreela.API.Persistence.Migrations
             modelBuilder.Entity("DevFreela.API.Entities.UserSkill", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdSkill")
                         .HasColumnType("int");
@@ -177,9 +183,14 @@ namespace DevFreela.API.Persistence.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdSkill");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("UserSkills");
                 });
@@ -224,15 +235,15 @@ namespace DevFreela.API.Persistence.Migrations
 
             modelBuilder.Entity("DevFreela.API.Entities.UserSkill", b =>
                 {
-                    b.HasOne("DevFreela.API.Entities.User", "User")
-                        .WithMany("Skills")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("DevFreela.API.Entities.Skill", "Skill")
                         .WithMany("UserSkills")
                         .HasForeignKey("IdSkill")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DevFreela.API.Entities.User", "User")
+                        .WithMany("Skills")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

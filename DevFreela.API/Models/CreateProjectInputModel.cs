@@ -10,7 +10,7 @@ namespace DevFreela.API.Models
         public int IdFreelancer { get; set; }
         public decimal TotalCost { get; set; }
 
-        public Project ToEntity() 
+        public Project ToEntity()
             => new(Title, Description, IdClient, IdFreelancer, TotalCost);
     }
 }

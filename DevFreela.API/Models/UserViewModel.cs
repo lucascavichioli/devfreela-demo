@@ -1,5 +1,4 @@
 ﻿using DevFreela.API.Entities;
-using System.Net.NetworkInformation;
 
 namespace DevFreela.API.Models
 {
@@ -21,6 +20,7 @@ namespace DevFreela.API.Models
         public static UserViewModel FromEntity(User user)
         {
             var skills = user.Skills.Select(u => u.Skill.Description).ToList();
+
             return new UserViewModel(user.FullName, user.Email, user.BirthDate, skills);
         }
     }

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Scaffolding;
-
-namespace DevFreela.API.Entities
+﻿namespace DevFreela.API.Entities
 {
     public class User : BaseEntity
     {
@@ -16,14 +14,11 @@ namespace DevFreela.API.Entities
             OwnedProjects = [];
             FreelanceProjects = [];
             Comments = [];
-
         }
 
         public string FullName { get; private set; }
         public string Email { get; private set; }
-
         public DateTime BirthDate { get; private set; }
-
         public bool Active { get; private set; }
 
         public List<UserSkill> Skills { get; private set; }

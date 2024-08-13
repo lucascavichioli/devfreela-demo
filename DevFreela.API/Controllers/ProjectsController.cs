@@ -1,11 +1,8 @@
 ﻿using DevFreela.API.Entities;
 using DevFreela.API.Models;
 using DevFreela.API.Persistence;
-using DevFreela.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace DevFreela.API.Controllers
 {
@@ -21,15 +18,18 @@ namespace DevFreela.API.Controllers
 
         //GET api/projects?search=crm
         [HttpGet]
-        public IActionResult Get(string search = "")
+        public IActionResult Get(string search = "", int page = 0, int size = 3)
         {
             var projects = _context.Projects
                 .Include(p => p.Client)
                 .Include(p => p.Freelancer)
-                .Where(p => !p.IsDeleted).ToList();
+                .Where(p => !p.IsDeleted && (search == "" || p.Title.Contains(search) || p.Description.Contains(search)))
+                .Skip(page * size)
+                .Take(size)
+                .ToList();
             var model = projects.Select(ProjectItemViewModel.FromEntity).ToList();
 
-            return Ok(projects);
+            return Ok(model);
         }
 
         // GET api/projects/1234
@@ -43,7 +43,7 @@ namespace DevFreela.API.Controllers
                 .SingleOrDefault(p => p.Id == id);
 
             var model = ProjectViewModel.FromEntity(project);
-            
+
             return Ok(model);
         }
 
@@ -67,7 +67,7 @@ namespace DevFreela.API.Controllers
                 return NotFound();
 
             project.Update(model.Title, model.Description, model.TotalCost);
-            
+
             _context.Projects.Update(project);
             _context.SaveChanges();
 

@@ -3,7 +3,6 @@ using DevFreela.API.Models;
 using DevFreela.API.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 
 namespace DevFreela.API.Controllers
 {
@@ -16,11 +15,13 @@ namespace DevFreela.API.Controllers
         {
             _context = context;
         }
+
         // GET api/skills
         [HttpGet]
         public IActionResult GetAll()
-        { 
+        {
             var skills = _context.Skills.ToList();
+
             return Ok(skills);
         }
 
@@ -29,6 +30,7 @@ namespace DevFreela.API.Controllers
         public IActionResult Post(CreateSkillInputModel model)
         {
             var skill = new Skill(model.Description);
+
             _context.Skills.Add(skill);
             _context.SaveChanges();
 
