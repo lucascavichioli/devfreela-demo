@@ -7,12 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DevFreela.Core\DevFreela.Core.csproj" />
     <ProjectReference Include="..\DevFreela.Infrastructure\DevFreela.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\ProjectCommands\UpdateProject\" />
+    <Folder Include="Commands\ProjectCommands\StartProject\" />
+    <Folder Include="Commands\ProjectCommands\DeleteProject\" />
+    <Folder Include="Commands\ProjectCommands\InsertComment\" />
+    <Folder Include="Commands\ProjectCommands\InsertProject\" />
+    <Folder Include="Queries\ProjectQueries\GetAllProjects\" />
+    <Folder Include="Queries\ProjectQueries\GetProjectById\" />
   </ItemGroup>
 
 </Project>
