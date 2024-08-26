@@ -1,8 +1,6 @@
-﻿using Azure;
-using DevFreela.API.Models;
+﻿using DevFreela.API.Models;
 using DevFreela.Application.Models;
 using DevFreela.Applications.Models;
-using System.Drawing;
 
 namespace DevFreela.Application.Services
 {

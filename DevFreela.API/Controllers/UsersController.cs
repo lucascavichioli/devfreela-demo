@@ -3,6 +3,7 @@ using DevFreela.Applications.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using DevFreela.Application.Services;
 
 namespace DevFreela.API.Controllers
 {
@@ -10,38 +11,30 @@ namespace DevFreela.API.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly DevFreelaDbContext _context;
-        public UsersController(DevFreelaDbContext context)
+        private readonly IUsersService _service;
+        public UsersController(IUsersService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _context.Users
-                .Include(u => u.Skills)
-                    .ThenInclude(u => u.Skill)
-                .SingleOrDefault(u => u.Id == id);
+            var result = _service.GetById(id);
 
-            if (user is null)
-            {
-                return NotFound();
-            }
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
 
-            var model = UserViewModel.FromEntity(user);
-
-            return Ok(model);
+            return Ok(result);
         }
 
         // POST api/users
         [HttpPost]
         public IActionResult Post(CreateUserInputModel model)
         {
-            var user = new User(model.FullName, model.Email, model.BirthDate);
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            var result = _service.Post(model);
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
 
             return NoContent();
         }
@@ -49,10 +42,9 @@ namespace DevFreela.API.Controllers
         [HttpPost("{id}/skills")]
         public IActionResult PostSkills(int id, UserSkillsInputModel model)
         {
-            var userSkills = model.SkillIds.Select(s => new UserSkill(id, s)).ToList();
-
-            _context.UserSkills.AddRange(userSkills);
-            _context.SaveChanges();
+            var result = _service.PostSkills(id, model);
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
 
             return NoContent();
         }
@@ -60,11 +52,11 @@ namespace DevFreela.API.Controllers
         [HttpPut("{id}/profile-picture")]
         public IActionResult PostProfilePicture(int id, IFormFile file)
         {
-            var description = $"FIle: {file.FileName}, Size: {file.Length}";
-
-            // Processar a imagem
-
-            return Ok(description);
+            var result = _service.PostProfilePicture(id, file);
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
+            
+            return Ok(result);
         }
     }
 }

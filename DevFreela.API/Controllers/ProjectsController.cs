@@ -10,11 +10,9 @@ namespace DevFreela.API.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly DevFreelaDbContext _context;
         private readonly IProjectService _service;
-        public ProjectsController(DevFreelaDbContext context, IProjectService service)
+        public ProjectsController(IProjectService service)
         {
-            _context = context;
             _service = service;
         }
 
