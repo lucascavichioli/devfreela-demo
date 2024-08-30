@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Commands\ProjectCommands\UpdateProject\" />
     <Folder Include="Commands\ProjectCommands\StartProject\" />
-    <Folder Include="Commands\ProjectCommands\DeleteProject\" />
     <Folder Include="Commands\ProjectCommands\InsertComment\" />
     <Folder Include="Commands\ProjectCommands\InsertProject\" />
     <Folder Include="Queries\ProjectQueries\GetAllProjects\" />
