@@ -1,9 +1,9 @@
-﻿using DevFreela.Core.Entities;
-using DevFreela.Applications.Models;
-using DevFreela.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DevFreela.Application.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using DevFreela.Application.Queries.UserQueries.GetUserById;
+using DevFreela.Application.Commands.ProjectCommands.InsertComment;
+using DevFreela.Application.Commands.UserCommands.InsertSkills;
+using DevFreela.Application.Commands.UserCommands.UpdateProfilePicture;
 
 namespace DevFreela.API.Controllers
 {
@@ -11,16 +11,16 @@ namespace DevFreela.API.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUsersService _service;
-        public UsersController(IUsersService service)
+        private readonly IMediator _mediator;
+        public UsersController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _service.GetById(id);
+            var result = await _mediator.Send(new GetUserByIdQuery(id));
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
@@ -30,9 +30,10 @@ namespace DevFreela.API.Controllers
 
         // POST api/users
         [HttpPost]
-        public IActionResult Post(CreateUserInputModel model)
+        public async Task<IActionResult> Post(InsertCommentCommand command)
         {
-            var result = _service.Post(model);
+            var result = await _mediator.Send(command);
+            
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
 
@@ -40,9 +41,9 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost("{id}/skills")]
-        public IActionResult PostSkills(int id, UserSkillsInputModel model)
+        public async Task<IActionResult> PostSkills(InsertSkillsCommand command)
         {
-            var result = _service.PostSkills(id, model);
+            var result = await _mediator.Send(command);
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
 
@@ -50,9 +51,9 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPut("{id}/profile-picture")]
-        public IActionResult PostProfilePicture(int id, IFormFile file)
+        public async Task<IActionResult> PostProfilePicture(UpdateProfilePictureCommand command)
         {
-            var result = _service.PostProfilePicture(id, file);
+            var result = await _mediator.Send(command);
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
             

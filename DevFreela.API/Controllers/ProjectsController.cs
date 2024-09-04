@@ -1,7 +1,4 @@
-﻿using DevFreela.API.Models;
-using DevFreela.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Mvc;
-using DevFreela.Applications.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using DevFreela.Application.Services;
 using MediatR;
 using DevFreela.Application.Queries.ProjectQueries.GetAllProjects;
@@ -64,7 +61,7 @@ namespace DevFreela.API.Controllers
 
         // PUT api/projects/1234
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UpdateProjectCommand command)
+        public async Task<IActionResult> Put(UpdateProjectCommand command)
         {
             var result = await _mediator.Send(command);
             
