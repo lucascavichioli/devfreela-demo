@@ -1,6 +1,4 @@
-﻿using DevFreela.Applications.Models;
-using Microsoft.AspNetCore.Mvc;
-using DevFreela.Application.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DevFreela.Application.Queries.SkillQueries.GetAllQuery;
 using DevFreela.Application.Commands.SkillCommands;

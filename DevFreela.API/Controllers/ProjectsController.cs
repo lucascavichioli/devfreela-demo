@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using DevFreela.Application.Services;
 using MediatR;
 using DevFreela.Application.Queries.ProjectQueries.GetAllProjects;
 using DevFreela.Application.Queries.ProjectQueries.GetProjectById;
