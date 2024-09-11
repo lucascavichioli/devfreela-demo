@@ -4,6 +4,7 @@ using DevFreela.Application.Queries.UserQueries.GetUserById;
 using DevFreela.Application.Commands.ProjectCommands.InsertComment;
 using DevFreela.Application.Commands.UserCommands.InsertSkills;
 using DevFreela.Application.Commands.UserCommands.UpdateProfilePicture;
+using DevFreela.Application.Commands.UserCommands.InsertUser;
 
 namespace DevFreela.API.Controllers
 {
@@ -30,7 +31,7 @@ namespace DevFreela.API.Controllers
 
         // POST api/users
         [HttpPost]
-        public async Task<IActionResult> Post(InsertCommentCommand command)
+        public async Task<IActionResult> Post(InsertUserCommand command)
         {
             var result = await _mediator.Send(command);
             
