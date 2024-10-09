@@ -14,7 +14,7 @@ namespace DevFreela.Application.Commands.UserCommands.InsertUser
         }
         public async Task<ResultViewModel> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User(request.FullName, request.Email, request.BirthDate);
+            var user = new User(request.FullName, request.Email, request.BirthDate, request.Password, request.Role);
             await _repository.Add(user);
 
             return ResultViewModel<int>.Success(user.Id);
