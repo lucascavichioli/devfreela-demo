@@ -5,6 +5,7 @@ using DevFreela.Application.Commands.ProjectCommands.InsertComment;
 using DevFreela.Application.Commands.UserCommands.InsertSkills;
 using DevFreela.Application.Commands.UserCommands.UpdateProfilePicture;
 using DevFreela.Application.Commands.UserCommands.InsertUser;
+using DevFreela.Application.Commands.UserCommands.LoginUser;
 
 namespace DevFreela.API.Controllers
 {
@@ -58,6 +59,15 @@ namespace DevFreela.API.Controllers
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
             
+            return Ok(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(LoginUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if(result is null)
+                return BadRequest("Login inválido");
             return Ok(result);
         }
     }
