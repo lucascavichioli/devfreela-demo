@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DevFreela.Application.Commands.UserCommands.InsertUser
 {
-    public class InsertUserCommand : IRequest<ResultViewModel<int>>
+    public class InsertUserCommand : IRequest<ResultViewModel>
     {
         public string FullName { get; set; }
 

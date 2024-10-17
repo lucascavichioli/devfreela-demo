@@ -1,5 +1,7 @@
 ﻿using DevFreela.Application.Commands.ProjectCommands.InsertProject;
+using DevFreela.Application.Commands.UserCommands.InsertUser;
 using DevFreela.Application.Models;
+using DevFreela.Infrastructure.Auth;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
