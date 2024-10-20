@@ -6,11 +6,13 @@ using DevFreela.Application.Commands.UserCommands.InsertSkills;
 using DevFreela.Application.Commands.UserCommands.UpdateProfilePicture;
 using DevFreela.Application.Commands.UserCommands.InsertUser;
 using DevFreela.Application.Commands.UserCommands.LoginUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevFreela.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -32,6 +34,7 @@ namespace DevFreela.API.Controllers
 
         // POST api/users
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(InsertUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -63,6 +66,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> LoginUser(LoginUserCommand command)
         {
             var result = await _mediator.Send(command);

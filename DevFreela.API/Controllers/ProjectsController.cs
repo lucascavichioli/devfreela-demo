@@ -8,11 +8,13 @@ using DevFreela.Application.Commands.ProjectCommands.DeleteProject;
 using DevFreela.Application.Commands.ProjectCommands.StartProject;
 using DevFreela.Application.Commands.ProjectCommands.CompleteProject;
 using DevFreela.Application.Commands.ProjectCommands.InsertComment;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevFreela.API.Controllers
 {
-    [Route("api/projects")]
     [ApiController]
+    [Route("api/projects")]
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -45,6 +47,7 @@ namespace DevFreela.API.Controllers
 
         // POST api/projects
         [HttpPost]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Post(InsertProjectCommand command)
         {
             var result = await _mediator.Send(command);
@@ -57,6 +60,7 @@ namespace DevFreela.API.Controllers
 
         // PUT api/projects/1234
         [HttpPut("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Put(UpdateProjectCommand command)
         {
             var result = await _mediator.Send(command);
@@ -70,6 +74,7 @@ namespace DevFreela.API.Controllers
 
         //DELETE api/projects/1234
         [HttpDelete("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteProjectCommand(id));
